@@ -1,15 +1,14 @@
-package com.myapplication.db;
+package com.myapplication.dao;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
+import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-import com.myapplication.dao.Note;
-import com.myapplication.dao.NoteDao;
-
+@Database(entities = {Note.class}, version = 1)
 public abstract class NoteDatabase extends RoomDatabase {
     private static NoteDatabase instance;
     public abstract NoteDao noteDao();
@@ -17,7 +16,9 @@ public abstract class NoteDatabase extends RoomDatabase {
     public static synchronized NoteDatabase getInstance(Context context) {
         if (instance==null){
             instance = Room.databaseBuilder(context, NoteDatabase.class, "note_database")
-                    .fallbackToDestructiveMigration().addCallback(roomCallback).build();
+                    .fallbackToDestructiveMigration()
+                    .addCallback(roomCallback)
+                    .build();
         }
         return instance;
     }
