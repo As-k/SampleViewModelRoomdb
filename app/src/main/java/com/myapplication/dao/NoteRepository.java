@@ -14,7 +14,6 @@ public class NoteRepository {
         NoteDatabase noteDatabase = NoteDatabase.getInstance(application);
         noteDao = noteDatabase.noteDao();
         allNotes = noteDao.getAllNotes();
-
     }
 
     public void insert(Note note){
@@ -34,6 +33,10 @@ public class NoteRepository {
     }
 
     public LiveData<List<Note>> getAllNotes(){
+        return allNotes;
+    }
+
+    public LiveData<List<Note>> getNoteById(int id){
         return allNotes;
     }
 
@@ -89,6 +92,20 @@ public class NoteRepository {
         @Override
         protected Void doInBackground(Void... voids) {
             noteDao.deleteAllNotes();
+            return null;
+        }
+    }
+
+    private static class GetNoteByIDAsyncTask extends AsyncTask<Integer, Void, Void> {
+        private NoteDao noteDao;
+
+        private GetNoteByIDAsyncTask(NoteDao noteDao) {
+            this.noteDao = noteDao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... id) {
+            noteDao.getNoteByID(id[0]);
             return null;
         }
     }

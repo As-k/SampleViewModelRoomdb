@@ -5,11 +5,16 @@
 
     <data>
 
+        <variable
+            name="adapter"
+            type="com.myapplication.ui.NoteAdapter" />
+
+        <variable
+            name="activity"
+            type="com.myapplication.MainActivity" />
     </data>
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F5F5F5"
@@ -19,6 +24,8 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:adapter="@{adapter}"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             tools:listitem="@layout/note_item" />
 
         <android.support.design.widget.FloatingActionButton
@@ -28,6 +35,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:src="@drawable/ic_add"
+            android:onClick="@{() -> activity.click()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </android.support.constraint.ConstraintLayout>
