@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
                                 .putExtra(EXTRA_DESCRIPTION, note.getDescription())
                                 .putExtra(EXTRA_PRIORITY, note.getPriority()),
                         EDIT_NOTE_REQUEST);
-                Toast.makeText(MainActivity.this, note.getDescription(), Toast.LENGTH_SHORT).show();
             }
         });
         binding.setAdapter(adapter);
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         noteViewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
             @Override
             public void onChanged(@Nullable List<Note> notes) {
-                adapter.setAllNotes(notes);
+                adapter.submitList(notes);
             }
         });
 

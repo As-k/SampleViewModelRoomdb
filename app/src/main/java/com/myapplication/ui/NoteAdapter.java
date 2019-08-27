@@ -3,6 +3,8 @@ package com.myapplication.ui;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
+import android.support.v7.recyclerview.extensions.ListAdapter;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -14,13 +16,32 @@ import com.myapplication.dao.Note;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
-    List<Note> allNotes = new ArrayList<>();
-    OnItemClickListener listener;
+public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteViewHolder> {
+    //    List<Note> allNotes = new ArrayList<>();
+    private OnItemClickListener listener;
+
+//    protected NoteAdapter(@NonNull DiffUtil.ItemCallback<Note> diffCallback) {
+//        super(diffCallback);
+//    }
 
     public NoteAdapter(OnItemClickListener listener) {
+        super(diffCallback);
         this.listener = listener;
     }
+
+    private static final DiffUtil.ItemCallback<Note> diffCallback = new DiffUtil.ItemCallback<Note>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Note oldNote, @NonNull Note newNote) {
+            return oldNote.getId() == newNote.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Note oldNote, @NonNull Note newNote) {
+            return oldNote.getTitle().equals(newNote.getTitle()) &&
+                    oldNote.getDescription().equals(newNote.getDescription()) &&
+                    oldNote.getPriority() == newNote.getPriority();
+        }
+    };
 
     @NonNull
     @Override
@@ -33,24 +54,24 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder noteViewHolder, int position) {
-        Note note = allNotes.get(position);
+        Note note = getItem(position);
         noteViewHolder.binding.setVariable(BR.note, note);
         noteViewHolder.binding.setVariable(BR.clicker, listener);
         noteViewHolder.binding.executePendingBindings();
     }
 
-    @Override
+    /*@Override
     public int getItemCount() {
         return allNotes.size();
-    }
+    }*/
 
-    public void setAllNotes(List<Note> notes) {
+   /* public void setAllNotes(List<Note> notes) {
         this.allNotes = notes;
         notifyDataSetChanged();
-    }
+    }*/
 
     public Note getNoteAt(int postion) {
-        return allNotes.get(postion);
+        return getItem(postion);
     }
 
     public interface OnItemClickListener {
