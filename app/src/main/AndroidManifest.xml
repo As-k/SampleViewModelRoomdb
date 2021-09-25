@@ -14,10 +14,12 @@
         tools:replace="android:allowBackup">
         <activity
             android:name=".ui.AddNoteActivity"
+            android:exported="true"
             android:parentActivityName=".MainActivity"
             tools:targetApi="jelly_bean" />
         <activity
             android:name=".MainActivity"
+            android:exported="true"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

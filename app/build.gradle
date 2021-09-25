@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion rootProject.targetSdkVersion
     defaultConfig {
         applicationId "com.myapplication"
-        minSdkVersion 15
-        targetSdkVersion 28
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -16,29 +16,43 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
     }
 }
 
 dependencies {
-    def room_version = "1.1.1"
-    def lifecycle_version = "1.1.1"
+    def room_version = "2.3.0"
+    def lifecycle_version = "2.4.0-beta01"
+
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support:design:28.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:2.0.0-beta2'
-    testImplementation 'junit:junit:4.13-beta-3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
+    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+    implementation "androidx.cardview:cardview:$rootProject.cardVersion"
+    implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.recyclerViewVersion"
+    implementation "androidx.legacy:legacy-support-v4:$rootProject.androidXLegacySupport"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.1"
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // ViewModel and LiveData Lifecycle component
-    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-    annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
+//    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+//    annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
+
 
     // Room component
-    implementation "android.arch.persistence.room:runtime:$room_version"
-    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+//    implementation "android.arch.persistence.room:runtime:$room_version"
+//    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
 }

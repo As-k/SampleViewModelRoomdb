@@ -1,34 +1,20 @@
 package com.myapplication.ui;
 
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
-import android.support.annotation.NonNull;
-import android.support.v7.recyclerview.extensions.ListAdapter;
-import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.myapplication.BR;
 import com.myapplication.R;
 import com.myapplication.dao.Note;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteViewHolder> {
-    //    List<Note> allNotes = new ArrayList<>();
-    private OnItemClickListener listener;
-
-//    protected NoteAdapter(@NonNull DiffUtil.ItemCallback<Note> diffCallback) {
-//        super(diffCallback);
-//    }
-
-    public NoteAdapter(OnItemClickListener listener) {
-        super(diffCallback);
-        this.listener = listener;
-    }
-
     private static final DiffUtil.ItemCallback<Note> diffCallback = new DiffUtil.ItemCallback<Note>() {
         @Override
         public boolean areItemsTheSame(@NonNull Note oldNote, @NonNull Note newNote) {
@@ -42,6 +28,17 @@ public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteViewHolder> {
                     oldNote.getPriority() == newNote.getPriority();
         }
     };
+
+//    protected NoteAdapter(@NonNull DiffUtil.ItemCallback<Note> diffCallback) {
+//        super(diffCallback);
+//    }
+    //    List<Note> allNotes = new ArrayList<>();
+    private OnItemClickListener listener;
+
+    public NoteAdapter(OnItemClickListener listener) {
+        super(diffCallback);
+        this.listener = listener;
+    }
 
     @NonNull
     @Override

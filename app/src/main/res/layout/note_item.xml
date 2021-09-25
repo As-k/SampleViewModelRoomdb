@@ -12,7 +12,7 @@
             type="com.myapplication.ui.NoteAdapter.OnItemClickListener" />
     </data>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -58,5 +58,5 @@
 
         </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </layout>
